@@ -67,64 +67,64 @@ namespace com.rmc.projects.urx.mouse_double_click
 
 		// PRIVATE STATIC
 
-		//--------------------------------------
-		//  Methods
-		//--------------------------------------
-		///<summary>
-		///	Use this for initialization
-		///</summary>
-		void Start ()
-		{
-			// VARIABLES
-			float maxTimeAllowedBetweenSingleCLicks_float = 1;
-			float delayBetweenAllowingADoubleClick_float = 5;	
-			int clicksRequiredForADoubleClick_int = 2;
-			
-			// CREATE OBSERVABLE 
-			//(ORDER IS NOT IMPORTANT, BUT SUBSCRIBE MUST BE LAST)
-			var mouseDoubleClickObservable = Observable
+//--------------------------------------
+//  Methods
+//--------------------------------------
+///<summary>
+///	Use this for initialization
+///</summary>
+void Start ()
+{
+	// VARIABLES
+	float maxTimeAllowedBetweenSingleCLicks_float = 1;
+	float delayBetweenAllowingADoubleClick_float = 5;	
+	int clicksRequiredForADoubleClick_int = 2;
+	
+	// CREATE OBSERVABLE 
+	//(ORDER IS NOT IMPORTANT, BUT SUBSCRIBE MUST BE LAST)
+	var mouseDoubleClickObservable = Observable
 
-				//RUN IT EVERY FRAME (INTERNALLY THAT MEANS Update()
-				.everyFrame
+		//RUN IT EVERY FRAME (INTERNALLY THAT MEANS Update()
+		.everyFrame
 
-				//FILTER RESULTS OF THE FRAME
-				//WE CARE ONLY 'DID USER CLICK MOUSE BUTTON?'
-				.filter	(
-					_ => 
-					Input.GetMouseButtonDown (0)
-				)
+		//FILTER RESULTS OF THE FRAME
+		//WE CARE ONLY 'DID USER CLICK MOUSE BUTTON?'
+		.filter	(
+			_ => 
+			Input.GetMouseButtonDown (0)
+		)
 
-				//DID WE FIND X RESULTS WITHIN Y SECONDS?
-				.withinTimeframe (clicksRequiredForADoubleClick_int, maxTimeAllowedBetweenSingleCLicks_float)
+		//DID WE FIND X RESULTS WITHIN Y SECONDS?
+		.withinTimeframe (clicksRequiredForADoubleClick_int, maxTimeAllowedBetweenSingleCLicks_float)
 
-				//REQUIRE SOME 'COOL-DOWN-TIME' BETWEEN SUCCESSES
-				.onceEvery (delayBetweenAllowingADoubleClick_float);
-
-
-			//FOR EVER EVENT THAT MEETS THOSE CRITERIA, CALL A METHOD
-			var subscription = mouseDoubleClickObservable
-				.subscribe (
-					_ => 
-					_onMouseEvent (MouseEventType.DoubleClick)
-
-				);
+		//REQUIRE SOME 'COOL-DOWN-TIME' BETWEEN SUCCESSES
+		.onceEvery (delayBetweenAllowingADoubleClick_float);
 
 
-			Debug.Log ("Subscription Setup : " + subscription);
+	//FOR EVER EVENT THAT MEETS THOSE CRITERIA, CALL A METHOD
+	var subscription = mouseDoubleClickObservable
+		.subscribe (
+			_ => 
+			_onMouseEvent (MouseEventType.DoubleClick)
+
+		);
 
 
-		}
-		//--------------------------------------
-		//  Events
-		//--------------------------------------
-		/// <summary>
-		/// SUCCESS: Double click
-		/// </summary>
-		private void _onMouseEvent (MouseEventType aMouseEventType)
-		{
+	Debug.Log ("Subscription Setup : " + subscription);
 
-				Debug.Log ("RX._onMouseDoubleClick() " + aMouseEventType);
-		}
+
+}
+//--------------------------------------
+//  Events
+//--------------------------------------
+/// <summary>
+/// SUCCESS: Double click
+/// </summary>
+private void _onMouseEvent (MouseEventType aMouseEventType)
+{
+
+		Debug.Log ("RX._onMouseDoubleClick() " + aMouseEventType);
+}
 	}
 }
 

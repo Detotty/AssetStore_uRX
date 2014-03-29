@@ -80,6 +80,15 @@ namespace com.rmc.projects.urx.mouse_double_click
 		//--------------------------------------
 		//  Methods
 		//--------------------------------------
+		///<summary>
+		///	Use this for initialization
+		///</summary>
+		void Start ()
+		{
+			Debug.Log ("All Is Setup");
+		}
+
+
 		/// <summary>
 		/// Update this instance.
 		/// </summary>
